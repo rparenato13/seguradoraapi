@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.renatoalmeida.seguradoraapi.domain.User;
 import com.renatoalmeida.seguradoraapi.repository.UserRepository;
-import com.renatoalmeida.seguradoraapi.services.exception.InvalidArgumentException;
 import com.renatoalmeida.seguradoraapi.services.exception.ObjectNotFoundException;
 import com.renatoalmeida.seguradoraapi.util.CpfValidator;
 
@@ -27,14 +26,18 @@ public class UserService {
 		return user.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
 	}
 	
+	public User findByCpf(String cpf) {
+		CpfValidator.valida(cpf); 
+		String cpfUnformated = CpfValidator.unformatCpf(cpf);
+		Optional<User> user = userRepository.findByCpf(cpfUnformated);
+		return user.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
+	}
+	
 	public User insert(User user) {
-		
 		String cpf = user.getCpf(); 
-		boolean valido = CpfValidator.valida(cpf); 
-		if(!valido) {
-			throw new InvalidArgumentException("CPF Inválido");
-		}
-		
+		CpfValidator.valida(cpf); 
+		String cpfUnformated = CpfValidator.unformatCpf(cpf);
+		user.setCpf(cpfUnformated);
 		return userRepository.insert(user);
 	}
 	

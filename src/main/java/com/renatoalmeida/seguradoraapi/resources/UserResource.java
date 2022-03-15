@@ -40,10 +40,18 @@ public class UserResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@GetMapping("/users/{id}")
-	@ApiOperation(value="Retorna um usuário pelo id")
-	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
-		User user = service.findById(id);
+//	@GetMapping("/users/{id}")
+//	@ApiOperation(value="Retorna um usuário pelo id")
+//	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+//		User user = service.findById(id);
+//		UserDTO userDTO = new UserDTO(user);
+//		return ResponseEntity.ok().body(userDTO);
+//	}
+	
+	@GetMapping("/users/{cpf}")
+	@ApiOperation(value="Retorna um usuário pelo CPF")
+	public ResponseEntity<UserDTO> findByCpf(@PathVariable String cpf) {
+		User user = service.findByCpf(cpf);
 		UserDTO userDTO = new UserDTO(user);
 		return ResponseEntity.ok().body(userDTO);
 	}
