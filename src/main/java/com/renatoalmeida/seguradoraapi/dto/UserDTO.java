@@ -3,6 +3,7 @@ package com.renatoalmeida.seguradoraapi.dto;
 import java.io.Serializable;
 
 import com.renatoalmeida.seguradoraapi.domain.User;
+import com.renatoalmeida.seguradoraapi.util.CpfValidator;
 
 public class UserDTO implements Serializable{
 
@@ -19,7 +20,7 @@ public class UserDTO implements Serializable{
 	public UserDTO(User obj) {
 		id = obj.getId();
 		name = obj.getName();
-		cpf = obj.getCpf();
+		cpf = CpfValidator.formatCpf(obj.getCpf());
 	}
 
 	public String getId() {

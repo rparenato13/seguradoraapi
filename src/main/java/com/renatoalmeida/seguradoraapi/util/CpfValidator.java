@@ -21,5 +21,10 @@ public class CpfValidator {
 	public static String unformatCpf(String cpf) {
 		return new CPFFormatter().unformat(cpf);
 	}
+	
+	public static String formatCpf(String cpf) {
+		return new CPFFormatter().format(cpf);
+	}
+
 
 }
