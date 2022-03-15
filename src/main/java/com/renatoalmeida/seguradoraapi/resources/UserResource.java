@@ -1,5 +1,6 @@
 package com.renatoalmeida.seguradoraapi.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,11 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.renatoalmeida.seguradoraapi.domain.User;
 import com.renatoalmeida.seguradoraapi.dto.UserDTO;
+import com.renatoalmeida.seguradoraapi.dto.UserInsertDTO;
 import com.renatoalmeida.seguradoraapi.services.UserService;
 
 import io.swagger.annotations.Api;
@@ -43,4 +48,12 @@ public class UserResource {
 		return ResponseEntity.ok().body(userDTO);
 	}
 	
+	@PostMapping("/users")
+	@ApiOperation(value="Insere um usuário")
+	public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO userInsertDTO) {
+		User userIn = User.fromDTO(userInsertDTO);
+		User userSaved = service.insert(userIn);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userSaved.getId()).toUri(); 
+		return ResponseEntity.created(uri).build();
+	}
 }

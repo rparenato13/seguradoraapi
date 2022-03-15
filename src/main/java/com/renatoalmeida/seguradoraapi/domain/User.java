@@ -6,6 +6,9 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.renatoalmeida.seguradoraapi.dto.UserDTO;
+import com.renatoalmeida.seguradoraapi.dto.UserInsertDTO;
+
 @Document
 public class User implements Serializable {
 
@@ -27,6 +30,18 @@ public class User implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
+	}
+	
+	public static User fromDTO(UserDTO userDTO) {
+		return new User(userDTO.getId(),
+				userDTO.getName(),
+				userDTO.getCpf());
+	}
+	
+	public static User fromDTO(UserInsertDTO userDTO) {
+		return new User(null,
+				userDTO.getName(),
+				userDTO.getCpf());
 	}
 
 
