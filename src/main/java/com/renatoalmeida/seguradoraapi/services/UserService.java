@@ -57,4 +57,16 @@ public class UserService {
 		userRepository.deleteById(id);
 	}
 	
+	public User update(User newObj) {
+		String id = newObj.getId(); 
+		User user = findById(id);
+		updateData(user, newObj);
+		return userRepository.save(user);
+	}
+
+	private void updateData(User user, User newObj) {
+		user.setName(newObj.getName());
+		user.setCpf(newObj.getCpf());
+	}
+	
 }
