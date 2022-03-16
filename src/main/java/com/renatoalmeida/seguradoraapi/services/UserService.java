@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.renatoalmeida.seguradoraapi.domain.User;
 import com.renatoalmeida.seguradoraapi.repository.UserRepository;
+import com.renatoalmeida.seguradoraapi.services.exception.ConstraintViolationException;
 import com.renatoalmeida.seguradoraapi.services.exception.ObjectNotFoundException;
 import com.renatoalmeida.seguradoraapi.util.CpfValidator;
 
@@ -38,7 +39,17 @@ public class UserService {
 		CpfValidator.valida(cpf); 
 		String cpfUnformated = CpfValidator.unformatCpf(cpf);
 		user.setCpf(cpfUnformated);
+		
+		this.cpfExist(cpfUnformated);
+
 		return userRepository.insert(user);
+	}
+	
+	public void cpfExist(String cpf) {
+		Optional<User> existentUser = userRepository.findByCpf(cpf);
+		if(existentUser.isPresent()) {
+			throw new ConstraintViolationException("CPF já existe na base de dados");
+		}
 	}
 	
 }
