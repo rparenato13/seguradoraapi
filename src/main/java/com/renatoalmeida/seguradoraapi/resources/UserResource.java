@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -60,7 +62,7 @@ public class UserResource {
 	
 	@PostMapping("/users")
 	@ApiOperation(value="Insere um usuário")
-	public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO userInsertDTO) {
+	public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO userInsertDTO) {
 		User userIn = User.fromDTO(userInsertDTO);
 		User userSaved = service.insert(userIn);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userSaved.getId()).toUri(); 
