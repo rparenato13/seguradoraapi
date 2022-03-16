@@ -13,17 +13,24 @@ public class UserInsertDTO implements Serializable{
 	@NotBlank(message = "O nome é obrigatório")
 	@Length(min = 3, max = 35, message = "O nome deve ter no mínimo {min} e no máximo {max} caracteres")
 	private String name;
+	@NotBlank(message = "O CPF é obrigatório")
 	@CPF(message = "CPF inválido")
 	private String cpf;
+	@NotBlank(message = "A cidade é obrigatória")
+	@Length(min = 3, max = 35, message = "A cidade deve ter no mínimo {min} e no máximo {max} caracteres")
+	private String cidade;
+	@NotBlank(message = "A UF é obrigatória")
+	@Length(min = 2, max = 2, message = "A UF deve possuir 2 caracteres")
+	private String uf;
 	
 	public UserInsertDTO() {
-		
 	}
 
-	public UserInsertDTO(String name, String cpf) {
-		super();
+	public UserInsertDTO(String name, String cpf, String cidade, String uf) {
 		this.name = name;
 		this.cpf = cpf;
+		this.cidade = cidade;
+		this.uf = uf;
 	}
 
 	public String getName() {
@@ -41,7 +48,21 @@ public class UserInsertDTO implements Serializable{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
-	
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
 
 }

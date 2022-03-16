@@ -12,6 +12,8 @@ public class UserDTO implements Serializable{
 	private String id;
 	private String name;
 	private String cpf;
+	private String cidade;
+	private String uf;
 
 	public UserDTO() {
 		
@@ -21,6 +23,8 @@ public class UserDTO implements Serializable{
 		id = obj.getId();
 		name = obj.getName();
 		cpf = CpfValidator.formatCpf(obj.getCpf());
+		cidade = obj.getCidade();
+		uf = obj.getUf();
 	}
 
 	public String getId() {
@@ -46,5 +50,22 @@ public class UserDTO implements Serializable{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+	
 	
 }
