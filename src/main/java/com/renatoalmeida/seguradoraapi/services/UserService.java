@@ -52,6 +52,13 @@ public class UserService {
 		}
 	}
 	
+	public void cpfExistForOtherUser(String cpf, User user) {
+		Optional<User> existentUser = userRepository.findByCpf(cpf);
+		if(existentUser.isPresent() && !existentUser.get().equals(user)) {
+			throw new ConstraintViolationException("CPF utilizado por outro cliente");
+		}
+	}
+	
 	public void delete(String id) {
 		findById(id);
 		userRepository.deleteById(id);
@@ -61,12 +68,22 @@ public class UserService {
 		String id = newObj.getId(); 
 		User user = findById(id);
 		updateData(user, newObj);
+		
+		String cpf = user.getCpf(); 
+		CpfValidator.valida(cpf); 
+		String cpfUnformated = CpfValidator.unformatCpf(cpf);
+		user.setCpf(cpfUnformated);
+		
+		this.cpfExistForOtherUser(cpfUnformated, user);
+		
 		return userRepository.save(user);
 	}
 
 	private void updateData(User user, User newObj) {
 		user.setName(newObj.getName());
 		user.setCpf(newObj.getCpf());
+		user.setCidade(newObj.getCidade());
+		user.setUf(newObj.getUf());
 	}
 	
 }
