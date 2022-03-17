@@ -9,8 +9,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,14 +44,45 @@ public class ApoliceResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	@GetMapping("/apolices/{id}")
+	@ApiOperation(value="Retorna uma apólice pelo id")
+	public ResponseEntity<ApoliceDTO> findById(@PathVariable String id){
+		Apolice apolice = service.findById(id);
+		ApoliceDTO apoliceDTO = new ApoliceDTO(apolice);
+		return ResponseEntity.ok().body(apoliceDTO);
+	}
+	
+	@GetMapping("/apolices/numero/{numero}")
+	@ApiOperation(value="Retorna uma apólice pelo id")
+	public ResponseEntity<ApoliceDTO> findById(@PathVariable Long numero){
+		Apolice apolice = service.findByNumeroApolice(numero);
+		ApoliceDTO apoliceDTO = new ApoliceDTO(apolice);
+		return ResponseEntity.ok().body(apoliceDTO);
+	}
+	
 	@PostMapping("/apolices")
 	@ApiOperation(value="Insere uma apólice")
 	public ResponseEntity<ApoliceDTO> insert(@RequestBody @Valid ApoliceInsertDTO apoliceInsertDTO) {
-		
 		Apolice apoliceSaved = service.insert(apoliceInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(apoliceSaved.getId()).toUri(); 
-		
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@DeleteMapping("/apolices/{id}")
+	@ApiOperation(value="Remove uma apólice pelo id")
+	public ResponseEntity<ApoliceDTO> delete(@PathVariable String id){
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/apolices/{id}")
+	@ApiOperation(value="Atualiza uma apólice pelo id")
+	public ResponseEntity<ApoliceDTO> update(@RequestBody @Valid ApoliceInsertDTO apoliceInsertDTO, @PathVariable String id) {
+		Apolice apoliceIn = Apolice.fromDTO(apoliceInsertDTO);
+		apoliceIn.setId(id);
+		Apolice apolice = service.update(apoliceIn);
+		ApoliceDTO apoliceDTO = new ApoliceDTO(apolice);
+		return ResponseEntity.ok().body(apoliceDTO);
 	}
 	
 }

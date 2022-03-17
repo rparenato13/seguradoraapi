@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.renatoalmeida.seguradoraapi.dto.ApoliceInsertDTO;
+
 @Document
 public class Apolice implements Serializable{
 
@@ -36,6 +38,15 @@ public class Apolice implements Serializable{
 		this.fimVigencia = fimVigencia;
 		this.placaVeiculo = placaVeiculo;
 		this.valor = valor;
+	}
+	
+	public static Apolice fromDTO(ApoliceInsertDTO apoliceDTO) {
+		return new Apolice(null,
+				null,
+				apoliceDTO.getInicioVigencia(),
+				apoliceDTO.getFimVigencia(),
+				apoliceDTO.getPlacaVeiculo(),
+				apoliceDTO.getValor());
 	}
 	
 	public String getId() {

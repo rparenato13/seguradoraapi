@@ -78,7 +78,7 @@ public class UserResource {
 	
 	@PutMapping("/users/{id}")
 	@ApiOperation(value="Atualiza um usuário pelo id")
-	public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO userInsertDTO, @PathVariable String id) {
+	public ResponseEntity<UserDTO> update(@RequestBody @Valid UserInsertDTO userInsertDTO, @PathVariable String id) {
 		User userIn = User.fromDTO(userInsertDTO);
 		userIn.setId(id);
 		User userSaved = service.update(userIn);
