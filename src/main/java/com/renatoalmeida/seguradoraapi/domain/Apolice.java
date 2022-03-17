@@ -17,6 +17,8 @@ public class Apolice implements Serializable{
 	
     @Transient
     public static final String SEQUENCE_NAME = "apolices_sequence";
+    @Transient
+    public static final Long TIME_CONVERT_TO_DAY = 86400000L;
 	
 	@Id
 	private String id;
@@ -113,6 +115,25 @@ public class Apolice implements Serializable{
 		Apolice other = (Apolice) obj;
 		return Objects.equals(id, other.id) && Objects.equals(numero, other.numero);
 	}
+	
+	public boolean isVencida() {
+		return getFimVigencia().before(new Date());
+	}
+	
+	public Integer qtdDiasVencida() {
+		if(isVencida()) {
+			return (int) ( (new Date().getTime() - getFimVigencia().getTime() ) / TIME_CONVERT_TO_DAY ); 
+		}
+		return 0;
+	}
+	public Integer qtdDiasAVencer() {
+		if(!isVencida()) {
+			return (int) ( (getFimVigencia().getTime() - new Date().getTime() ) / TIME_CONVERT_TO_DAY ) + 1; 
+		}
+		return 0;
+	}
+	
+	
 	
 	
 }

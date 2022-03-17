@@ -86,4 +86,5 @@ public class ApoliceService {
 		apolice.setPlacaVeiculo(newObj.getPlacaVeiculo());
 		apolice.setValor(newObj.getValor());
 	}
+
 }

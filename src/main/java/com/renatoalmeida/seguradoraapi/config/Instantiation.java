@@ -1,6 +1,7 @@
 package com.renatoalmeida.seguradoraapi.config;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,21 @@ public class Instantiation implements CommandLineRunner{
 	public void insertItensApolice() {
 		apoliceRepository.deleteAll();
 		
-		Apolice apolice1 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), new Date(), new Date(), "ABC0001", 1000.99F);
-		Apolice apolice2 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), new Date(), new Date(), "ABC0002", 2000.99F);
-		Apolice apolice3 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), new Date(), new Date(), "ABC0003", 3000.99F);
-		Apolice apolice4 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), new Date(), new Date(), "ABC0004", 4000.99F);
+		Calendar hoje = Calendar.getInstance(); 
+		hoje.add(Calendar.DATE, -2);
+		Date antesDeontem = hoje.getTime();
+		hoje.add(Calendar.DATE, 1);
+		Date ontem = hoje.getTime();
+		hoje.add(Calendar.DATE, 2);
+		Date amanha = hoje.getTime();
+		hoje.add(Calendar.DATE, 1);
+		Date depoisDeamanha = hoje.getTime();
+
+		Apolice apolice1 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), antesDeontem, ontem, "ABC0001", 1000.99F);
+		Apolice apolice2 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), ontem, amanha, "ABC0002", 2000.99F);
+		Apolice apolice3 = new Apolice(null, sequenceGeneratorService.generateSequence(Apolice.SEQUENCE_NAME), amanha, depoisDeamanha, "ABC0003", 3000.99F);
 		
-		apoliceRepository.saveAll(Arrays.asList(apolice1, apolice2, apolice3, apolice4));
+		apoliceRepository.saveAll(Arrays.asList(apolice1, apolice2, apolice3));
 	}
 
 }

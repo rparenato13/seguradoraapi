@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.renatoalmeida.seguradoraapi.domain.Apolice;
+import com.renatoalmeida.seguradoraapi.dto.ApoliceConsultaDTO;
 import com.renatoalmeida.seguradoraapi.dto.ApoliceDTO;
 import com.renatoalmeida.seguradoraapi.dto.ApoliceInsertDTO;
 import com.renatoalmeida.seguradoraapi.services.ApoliceService;
@@ -54,10 +55,10 @@ public class ApoliceResource {
 	
 	@GetMapping("/apolices/numero/{numero}")
 	@ApiOperation(value="Retorna uma apólice pelo id")
-	public ResponseEntity<ApoliceDTO> findById(@PathVariable Long numero){
+	public ResponseEntity<ApoliceConsultaDTO> findById(@PathVariable Long numero){
 		Apolice apolice = service.findByNumeroApolice(numero);
-		ApoliceDTO apoliceDTO = new ApoliceDTO(apolice);
-		return ResponseEntity.ok().body(apoliceDTO);
+		ApoliceConsultaDTO apoliceConsultaDTO = new ApoliceConsultaDTO(apolice);
+		return ResponseEntity.ok().body(apoliceConsultaDTO);
 	}
 	
 	@PostMapping("/apolices")
