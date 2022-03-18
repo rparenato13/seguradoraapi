@@ -20,22 +20,22 @@ Consultar uma apólice por número:
 
 ## Installation
 
-Rode os comandos na pasta do projeto
+Para criar o ambiente de desenvolvimento rode os comandos na pasta do projeto
 
-Para criar a imagem com a API e o banco mongodb
+```bash
+mvn clean package -DskipTests
+```
+
+Para criar a imagem com a API Rest e o banco mongodb
+
 ```bash
 docker-compose build
 ```
 
 Comando para subir os containers pelo docker-compose
+
 ```bash
 docker-compose up
-```
-
-Comando para subir os containers 
-```bash
-docker start seguradora_srv
-docker start seguradora_mdb
 ```
 
 ## Usage
