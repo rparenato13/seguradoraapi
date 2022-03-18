@@ -26,7 +26,7 @@ Para criar o ambiente de desenvolvimento rode os comandos na pasta do projeto
 mvn clean package -DskipTests
 ```
 
-Para criar a imagem com a API Rest e o banco mongodb
+Para criar a imagem com a API Rest e o banco mongodb (Imagem docker seguradoraapi_api_service)
 
 ```bash
 docker-compose build
