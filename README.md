@@ -20,7 +20,9 @@ Consultar uma apólice por número:
 
 ## Installation
 
-Para criar o ambiente de desenvolvimento rode os comandos na pasta do projeto
+### Para criar o ambiente de desenvolvimento
+
+Rode os comandos na pasta do projeto
 
 ```bash
 mvn clean package -DskipTests
@@ -36,6 +38,32 @@ Comando para subir os containers pelo docker-compose
 
 ```bash
 docker-compose up
+```
+
+### Para criar subir o ambiente baixando do docker hub
+
+Passo1: Baixar a imagem da SeguradoraAPI do docker hub
+
+```bash
+docker pull renatopalmeida/seguradoraapi_api_service:tag
+```
+
+Passo2: Baixar a imagem do MongoDB
+
+```bash
+docker pull mongo:4.4.3
+```
+
+Passo3: Rodar a imagem do MongoDB mapeando a porta 27017 e indicando o nome mongo_db
+
+```bash
+docker run  -p 27017:27017 --name mongo_db  mongo:4.4.3 
+```
+
+Passo5: Rodar a imagem da SeguradoraAPI criando o link para o mongo_db
+
+```bash
+docker run -e SPRING_DATA_MONGODB_URI='mongodb://mongo_db:27017/seguradora' -p 8080:8080 --link mongo_db:mongo_db renatopalmeida/seguradoraapi_api_service:1.0.0
 ```
 
 ## Usage

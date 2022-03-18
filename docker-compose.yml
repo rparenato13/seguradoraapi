@@ -10,6 +10,7 @@ services:
       - 27017:27017
   api_service:
     container_name: seguradora_srv
+    image: "renatopalmeida/seguradoraapi_api_service:1.0.0"
     build: .
     restart: always
     ports:
@@ -17,6 +18,4 @@ services:
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo_db:27017/seguradora
     depends_on:
-      - mongo_db
-    links:
       - mongo_db
